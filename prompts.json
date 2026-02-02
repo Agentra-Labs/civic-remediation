@@ -1,3 +1,19 @@
 {
-  "prompts": []
+    "prompts": {
+        "sentinel": {
+            "file": "prompts/sentinel.yaml"
+        },
+        "analyst": {
+            "file": "prompts/analyst.yaml"
+        },
+        "engineer": {
+            "file": "prompts/engineer.yaml"
+        },
+        "strategist": {
+            "file": "prompts/strategist.yaml"
+        },
+        "liaison": {
+            "file": "prompts/liaison.yaml"
+        }
+    }
 }

@@ -1,4 +1,5 @@
-model: gemini-2.0-flash
+slug: sentinel
+model: mistral-large-latest
 messages:
   - role: system
     content: |

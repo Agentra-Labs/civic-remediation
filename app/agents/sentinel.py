@@ -1,6 +1,6 @@
 from agno.agent import Agent
-from agno.models.google import Gemini
-from agno.tools.duckduckgo import DuckDuckGoTools
+from agno.models.mistral import MistralChat
+from agno.tools.parallel import ParallelTools
 from pydantic import BaseModel, Field
 
 from app.memory import get_shared_db
@@ -14,13 +14,13 @@ class Pitfall(BaseModel):
 
 class SentinelAgent:
     def __init__(self, user_id: str = "civic-system"):
-        import langwatch
-        self.prompt = langwatch.prompts.get("sentinel")
+        from app.utils import get_agent_prompt
+        self.prompt = get_agent_prompt("sentinel")
         
         self.agent = Agent(
             name="Sentinel",
-            model=Gemini(id="gemini-2.0-flash"),
-            tools=[DuckDuckGoTools()],
+            model=MistralChat(id="mistral-large-latest"),
+            tools=[ParallelTools(enable_search=True)],
             reasoning=True,  # Enable chain-of-thought reasoning
             db=get_shared_db(),
             update_memory_on_run=True,

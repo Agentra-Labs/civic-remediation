@@ -4,7 +4,7 @@ The team leader coordinates all agents and delegates tasks intelligently.
 """
 from agno.agent import Agent
 from agno.team import Team
-from agno.models.google import Gemini
+from agno.models.mistral import MistralChat
 
 from app.memory import get_shared_db
 from app.knowledge import get_civic_knowledge
@@ -27,10 +27,13 @@ def create_civic_team(user_id: str = "civic-system") -> Team:
     strategist = StrategistAgent(user_id).agent
     liaison = LiaisonAgent(user_id).agent
     
-    # Create team coordinator
-    coordinator = Agent(
-        name="Civic Remediation Coordinator",
-        model=Gemini(id="gemini-2.0-flash"),
+    # Create the team
+    # In Agno, the Team object acts as the leader/coordinator
+    # Create the team
+    # In Agno, the Team object acts as the leader/coordinator
+    team = Team(
+        name="Civic Remediation Team",
+        model=MistralChat(id="mistral-large-latest"),
         reasoning=True,
         db=get_shared_db(),
         update_memory_on_run=True,
@@ -46,15 +49,9 @@ def create_civic_team(user_id: str = "civic-system") -> Team:
             "- Liaison: Drafts partnership proposals",
             "Synthesize results from all agents into a comprehensive response.",
         ],
-        user_id=user_id,
-    )
-    
-    # Create the team
-    team = Team(
-        name="Civic Remediation Team",
-        leader=coordinator,
         members=[sentinel, analyst, engineer, strategist, liaison],
         add_team_history_to_members=True,  # Shared context
+        user_id=user_id,
     )
     
     return team

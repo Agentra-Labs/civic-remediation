@@ -1,5 +1,5 @@
 from agno.agent import Agent
-from agno.models.google import Gemini
+from agno.models.mistral import MistralChat
 from pydantic import BaseModel, Field
 from typing import List
 
@@ -15,12 +15,12 @@ class RootCauseAnalysis(BaseModel):
 
 class AnalystAgent:
     def __init__(self, user_id: str = "civic-system"):
-        import langwatch
-        self.prompt = langwatch.prompts.get("analyst")
+        from app.utils import get_agent_prompt
+        self.prompt = get_agent_prompt("analyst")
         
         self.agent = Agent(
             name="Analyst",
-            model=Gemini(id="gemini-2.0-flash"),
+            model=MistralChat(id="mistral-large-latest"),
             reasoning=True,
             db=get_shared_db(),
             update_memory_on_run=True,

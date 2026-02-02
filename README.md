@@ -1,87 +1,94 @@
-# Civic Remediation System
+# Civic Remediation System 🏙️✨
 
-A Multi-Agent Autonomous System for Civic Remediation, designed to bypass traditional bureaucratic delays by identifying, analyzing, and initiating private-sector solutions for systemic infrastructure failures.
+**Turning systemic failures into solved problems using Autonomous AI Agents.**
 
-## Overview
+---
 
-This system uses a team of autonomous AI agents to pipeline the process of civic remediation:
+## 💡 The Idea: Why We Built This
 
-1.  **Ingestion (Sentinel)**: Identifies systemic failures from media.
-2.  **Analysis (Analyst)**: Diagnoses root causes using scientific data.
-3.  **Matching (Engineer)**: Finds private sector solutions/vendors.
-4.  **Strategy (Strategist)**: Ranks vendors using MCDM algorithms.
-5.  **Execution (Liaison)**: Drafts proposals and initiates contact (with human oversight).
+It started with a simple thought: **What if we could fix our broken civic systems with AI?**
 
-## Tech Stack
+We all see the loopholes—the potholes that never get filled, the waste management systems that fail, the infrastructure that crumbles while paperwork piles up. I saw a YouTube short about these systemic failures and wondered:
 
-- **Framework**: Agno
-- **Language**: Python
-- **Database**: PostgreSQL with PgVector
-- **Monitoring/Testing**: LangWatch
-- **Package Manager**: uv
+> *"What if we can create an agent system that, when asked on a topic, scans the internet, finds such insightful facts/posts, and calls other agents to figure out solutions and take action to get them solved?"*
 
-## Setup
+That's exactly what this project does. It's not just a chatbot; it's a **digital task force** dedicating to solving real-world civic problems.
 
-1.  **Install uv**:
-    ```bash
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    ```
+![Origin Story](assets/origin_story.png)
+*[Read the full original conversation here](https://gemini.google.com/share/edcaf8469ef8)*
 
-2.  **Install dependencies**:
-    ```bash
-    uv sync
-    ```
+---
 
-3.  **Environment Variables**:
-    Copy `.env.example` to `.env` and configure your API keys.
+## 🤖 Meet Your Digital Task Force
 
-4.  **Run Tests**:
-    ```bash
-    uv run pytest
-    ```
+This isn't one AI trying to do everything. It's a **Team of Specialists**, each with a specific job, working together to get results.
 
-## System Architecture
+### 1. The Scout (Sentinel) 🔭
+**"I see the problem."**
+Scans the internet to find proof of systemic failures (news reports, data, citizen complaints). It separates noise from hard facts.
 
-The system uses an advanced **Multi-Agent Team** architecture:
-- **Coordinator Agent**: Intelligently delegates tasks and synthesizes results.
-- **Specialist Agents**: Sentinel, Analyst, Engineer, Strategist, Liaison.
-- **Shared Memory**: All agents share context via PostgreSQL.
-- **Knowledge Base**: RAG capabilities using PgVector for civic docs.
-- **Reasoning**: All agents enable Chain-of-Thought (CoT) for complex problem solving.
+### 2. The Scientist (Analyst) 🔬
+**"I understand why it's happening."**
+Digs deep into the root causes. Is it a budget issue? A technical flaw? A policy gap? It uses scientific data to diagnose the disease, not just the symptoms.
 
-## Prerequisites
-- Python 3.12+
-- `uv` package manager
-- **Docker** (for PostgreSQL + PgVector)
+### 3. The Solver (Engineer) 🛠️
+**"I know who can fix it."**
+Searches the private sector for startups and vendors who have the exact technology to solve this specific problem.
 
-### Start Database
-The system requires a PostgreSQL database for memory and knowledge.
+### 4. The Planner (Strategist) ♟️
+**"Here is the best path forward."**
+Ranks the solutions based on cost, speed, and impact. It creates a battle plan for remediation.
+
+### 5. The Doer (Liaison) 🤝
+**"Let's make it happen."**
+Drafts the actual partnership proposals and emails to connect the city with the solvers. (Don't worry, it asks for your permission before hitting send!)
+
+---
+
+## 🚀 How to Run It
+
+Ready to unleash the agents? Here is the simple guide.
+
+### Prerequisites
+- **Python** (installed via `uv`)
+- **Docker** (for their shared brain/memory)
+- API Keys for **Mistral AI** and **Parallel** (for browsing)
+
+### 1. Setup
 ```bash
+# Install the package manager
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies
+uv sync
+
+# Start the brain (Database)
 docker compose up -d
 ```
 
-## Usage
-
-### Run the Pipeline (Legacy Mode)
-Run the sequential pipeline:
-```bash
-uv run python app/main.py "Pollution of the Ganga River"
-```
-
-### Run the Team (Advanced Mode)
-Run the fully autonomous coordinated team:
+### 2. Wake Up the Team
+Run the full team to solve a problem:
 ```bash
 uv run python app/main.py "Pollution of the Ganga River" team
 ```
 
-### Dev Server / Playground
-Start the FastAPI server:
+### 3. Go Pro (AgentOS)
+Want a nice UI? Run the server and connect it to Agno's interface:
 ```bash
-uv run python app/serve.py
+uv run python app/agent_os_server.py
 ```
-Open: **http://localhost:8000/docs**
+Then visit **[os.agno.com](https://os.agno.com)**.
 
-### Run Scenario Tests
-```bash
-uv run pytest tests/scenarios/ -v
-```
+---
+
+## 🧠 Under the Hood (For Developers)
+
+This system is built on the cutting edge of Agentic AI:
+- **Framework**: [Agno](https://agno.com) (formerly Phidata)
+- **Model**: Mistral Large (via `Agno` models)
+- **Search**: Parallel Web Search (for high-fidelity browsing)
+- **Memory**: PostgreSQL with `pgvector` (they remember everything)
+- **Monitoring**: LangWatch (for tracing their thoughts)
+
+---
+*Built with ❤️ for a better civic future.*

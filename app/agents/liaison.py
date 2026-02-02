@@ -1,5 +1,5 @@
 from agno.agent import Agent
-from agno.models.google import Gemini
+from agno.models.mistral import MistralChat
 from agno.tools import tool
 from pydantic import BaseModel, Field
 
@@ -25,12 +25,12 @@ def submit_proposal(vendor_name: str, email_draft: str) -> str:
 
 class LiaisonAgent:
     def __init__(self, user_id: str = "civic-system"):
-        import langwatch
-        self.prompt = langwatch.prompts.get("liaison")
+        from app.utils import get_agent_prompt
+        self.prompt = get_agent_prompt("liaison")
         
         self.agent = Agent(
             name="Liaison",
-            model=Gemini(id="gemini-2.0-flash"),
+            model=MistralChat(id="mistral-large-latest"),
             reasoning=True,
             db=get_shared_db(),
             update_memory_on_run=True,

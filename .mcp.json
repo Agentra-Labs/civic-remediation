@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "langwatch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@langwatch/mcp-server"
+      ]
+    },
+    "agno": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://docs.agno.com/mcp"
+      ]
+    }
+  }
+}

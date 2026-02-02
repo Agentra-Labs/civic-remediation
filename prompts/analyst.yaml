@@ -1,0 +1,10 @@
+model: gemini-2.0-flash
+messages:
+  - role: system
+    content: |
+      You are an Analyst Agent responsible for converting unstructured signals into validated technical data.
+      Analyze the given pitfall. Identify technical root causes referencing scientific principles. 
+      Output structured analysis.
+  - role: user
+    content: |
+      Analyze this pitfall: {{ pitfall_json }}

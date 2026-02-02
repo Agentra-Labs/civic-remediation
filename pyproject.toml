@@ -1,0 +1,38 @@
+[project]
+name = "civic-remediation"
+version = "0.1.0"
+description = "Multi-Agent Autonomous System for Civic Remediation"
+requires-python = ">=3.10"
+dependencies = [
+    "agno[postgres]",
+    "google-generativeai",
+    "langwatch",
+    "python-dotenv",
+    "pydantic",
+    "fastapi",
+    "uvicorn",
+    "psycopg[binary]",
+    "pgvector",
+    "sqlalchemy",
+    "duckduckgo-search",
+    "phidata",
+    "langwatch-scenario>=0.7.15",
+    "google-genai>=1.61.0",
+    "ddgs>=9.10.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio"
+]
+
+[tool.uv]
+package = true
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["app"]

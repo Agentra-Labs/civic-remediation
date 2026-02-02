@@ -1,0 +1,23 @@
+# Docker Compose for Civic Remediation System
+# PostgreSQL with PgVector for memory and knowledge storage
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: civic-remediation-db
+    environment:
+      POSTGRES_USER: ai
+      POSTGRES_PASSWORD: ai
+      POSTGRES_DB: ai
+    ports:
+      - "5532:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ai -d ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

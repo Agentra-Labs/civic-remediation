@@ -84,7 +84,7 @@ Then visit **[os.agno.com](https://os.agno.com)**.
 ## 🧠 Under the Hood (For Developers)
 
 This system is built on the cutting edge of Agentic AI:
-- **Framework**: [Agno](https://agno.com) (formerly Phidata)
+- **Framework**: [Agno](https://agno.com)
 - **Model**: Mistral Large (via `Agno` models)
 - **Search**: Parallel Web Search (for high-fidelity browsing)
 - **Memory**: PostgreSQL with `pgvector` (they remember everything)

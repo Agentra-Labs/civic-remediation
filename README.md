@@ -8,55 +8,62 @@
 
 It started with a simple thought: **What if we could fix our broken civic systems with AI?**
 
-We all see the loopholes—the potholes that never get filled, the waste management systems that fail, the infrastructure that crumbles while paperwork piles up. I saw a YouTube short about these systemic failures and wondered:
+We all see the loopholes—the potholes that never get filled, the waste management systems that fail, the infrastructure that crumbles while paperwork piles up. This project is a **digital task force** dedicated to solving real-world civic problems by connecting problems to solutions and funding.
 
-> *"What if we can create an agent system that, when asked on a topic, scans the internet, finds such insightful facts/posts, and calls other agents to figure out solutions and take action to get them solved?"*
+![Civic Remediation Pipeline](assets/pipeline_diagram.png)
 
-That's exactly what this project does. It's not just a chatbot; it's a **digital task force** dedicating to solving real-world civic problems.
+---
 
-![Origin Story](assets/origin_story.png)
-*[Read the full original conversation here](https://gemini.google.com/share/edcaf8469ef8)*
+## 🚀 The Singleton Pipeline Architecture
+
+We use a **Converging Singleton Pipeline** that focuses on "One Thing At A Time". Instead of generating divergent lists of problems and solutions, the system narrows down to a single, actionable project launch blueprint.
+
+**The Pipeline Flow:**
+1. **ONE Problem** (Selected for max impact/feasibility)
+2. **ONE Root Cause** (The critical lever to pull)
+3. **ONE Department** (The responsible active body)
+4. **ONE Solution** (The most effective technical intervention)
+5. **ONE Funding Source** (The best-fit grant/programme)
+6. **🚀 Project Launch** (A complete execution blueprint)
 
 ---
 
 ## 🤖 Meet Your Digital Task Force
 
-This isn't one AI trying to do everything. It's a **Team of Specialists**, each with a specific job, working together to get results.
+Each stage is handled by a specialized agent with a specific "Select One" mandate:
 
-### 1. The Scout (Sentinel) 🔭
-**"I see the problem."**
-Scans the internet to find proof of systemic failures (news reports, data, citizen complaints). It separates noise from hard facts.
+### 1. Sentinel (The Scout) 🔭
+**Goal:** Select the SINGLE most critical civic problem.
+Analyses severity, population impact, and feasibility to pick the problem where intervention matters most.
 
-### 2. The Scientist (Analyst) 🔬
-**"I understand why it's happening."**
-Digs deep into the root causes. Is it a budget issue? A technical flaw? A policy gap? It uses scientific data to diagnose the disease, not just the symptoms.
+### 2. Investigator (The Detective) 🔎
+**Goal:** Identify the SINGLE critical root cause.
+Digs past symptoms to find the systemic failure point—whether it's industrial discharge, broken incentives, or a specific bottleneck.
 
-### 3. The Solver (Engineer) 🛠️
-**"I know who can fix it."**
-Searches the private sector for startups and vendors who have the exact technology to solve this specific problem.
+### 3. Bureaucrat (The Mapper) 🏛️
+**Goal:** Select the SINGLE responsible department.
+Navigates the maze of government bodies to find the "Active Body" that actually has the jurisdiction and mandate to act.
 
-### 4. The Planner (Strategist) ♟️
-**"Here is the best path forward."**
-Ranks the solutions based on cost, speed, and impact. It creates a battle plan for remediation.
+### 4. Engineer (The Solver) 🛠️
+**Goal:** Design the SINGLE best technical solution.
+Matches the root cause to a scalable, modular intervention (e.g., decentralized STPs, sensor networks) that can be piloted quickly.
 
-### 5. The Doer (Liaison) 🤝
-**"Let's make it happen."**
-Drafts the actual partnership proposals and emails to connect the city with the solvers. (Don't worry, it asks for your permission before hitting send!)
+### 5. Liaison (The Fundraiser) 🤝
+**Goal:** Match the SINGLE best funding source.
+Scans government schemes, CSR funds, and global grants to find the money that perfectly fits the solution scope.
 
 ---
 
 ## 🚀 How to Run It
 
-Ready to unleash the agents? Here is the simple guide.
-
 ### Prerequisites
 - **Python** (installed via `uv`)
-- **Docker** (for their shared brain/memory)
-- API Keys for **Mistral AI** and **Parallel** (for browsing)
+- **Docker** (for shared memory)
+- API Keys for **Perplexity/OpenAI** (configured in `.env`)
 
 ### 1. Setup
 ```bash
-# Install the package manager
+# Install package manager
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install dependencies
@@ -66,16 +73,22 @@ uv sync
 docker compose up -d
 ```
 
-### 2. Wake Up the Team
-Run the full team to solve a problem:
+### 2. Run the Pipeline (Singleton Mode)
+This runs the converging pipeline to generate a focused project blueprint:
 ```bash
-uv run python app/main.py "Pollution of the Ganga River" team
+uv run python -m app.main "Pollution of the Ganga River"
 ```
 
-### 3. Go Pro (AgentOS)
+### 3. Run in Team Mode (Legacy)
+For broader exploration without strict convergence:
+```bash
+uv run python -m app.main "Pollution of the Ganga River" team
+```
+
+### 4. Go Pro (AgentOS)
 Want a nice UI? Run the server and connect it to Agno's interface:
 ```bash
-uv run python app/agent_os.py
+uv run -m app.agent_os
 ```
 Then visit **[os.agno.com](https://os.agno.com)**.
 
@@ -85,10 +98,19 @@ Then visit **[os.agno.com](https://os.agno.com)**.
 
 This system is built on the cutting edge of Agentic AI:
 - **Framework**: [Agno](https://agno.com)
-- **Model**: Mistral Large (via `Agno` models)
+- **Architecture**: Sequential Workflow with Pydantic-enforced Singleton Outputs
+- **Model**: Perplexity Reasoning / Mistral Large
 - **Search**: Parallel Web Search (for high-fidelity browsing)
-- **Memory**: PostgreSQL with `pgvector` (they remember everything)
-- **Monitoring**: LangWatch (for tracing their thoughts)
+- **Memory**: PostgreSQL with `pgvector`
+- **Monitoring**: LangWatch (for tracing)
+
+---
+
+## 🤝 Join the Mission
+
+We are building this open-source to empower citizens everywhere. If you're a developer, designer, or civic enthusiast, come build with us!
+
+[**Join our Discord Community**](https://discord.gg/g95mrWGm4G) to contribute, discuss ideas, and be part of this ambitious project.
 
 ---
 *Built with ❤️ for a better civic future.*

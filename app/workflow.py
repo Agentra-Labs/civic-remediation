@@ -24,98 +24,31 @@ from app.knowledge import get_shared_db
 
 
 # =============================================================================
-# Stage 1: Problem Selection
+# Stage Configuration (KISS: Data-driven instead of repetitive functions)
 # =============================================================================
-def create_problem_selector() -> Step:
-    """Create the problem selection stage."""
+STAGES = [
+    ("1. Select ONE Problem", "Problem Selector", "sentinel", SelectedProblem, 
+     "Analyze civic problems and SELECT the SINGLE most critical one to address."),
+    ("2. Identify ONE Cause", "Cause Identifier", "investigator", SelectedCause,
+     "Investigate root causes and SELECT the SINGLE most critical factor."),
+    ("3. Map ONE Department", "Department Mapper", "bureaucrat", SelectedDepartment,
+     "Map government bodies and SELECT the ONE most responsible department."),
+    ("4. Design ONE Solution", "Solution Designer", "engineer", SelectedSolution,
+     "Evaluate interventions and SELECT the SINGLE most effective solution."),
+    ("5. Match ONE Funding", "Funding Matcher", "liaison", SelectedFunding,
+     "Search funding sources and SELECT the ONE best-matched programme."),
+]
+
+
+def _create_stage_step(name: str, agent_name: str, slug: str, schema, description: str) -> Step:
+    """Create a pipeline stage step from config."""
     agent = create_agent(
-        name="Problem Selector",
-        slug="sentinel",
-        output_schema=SelectedProblem,
-        enable_reasoning_tools=False,  # Disabled - Pollinations models misformat
+        name=agent_name,
+        slug=slug,
+        output_schema=schema,
+        enable_reasoning_tools=False,
     )
-    
-    return Step(
-        name="1. Select ONE Problem",
-        agent=agent,
-        description="Analyze civic problems and SELECT the SINGLE most critical one to address.",
-    )
-
-
-# =============================================================================
-# Stage 2: Cause Identification
-# =============================================================================
-def create_cause_identifier() -> Step:
-    """Create the root cause identification stage."""
-    agent = create_agent(
-        name="Cause Identifier", 
-        slug="investigator",
-        output_schema=SelectedCause,
-        enable_reasoning_tools=False,  # Disabled - Pollinations models misformat
-    )
-    
-    return Step(
-        name="2. Identify ONE Cause",
-        agent=agent,
-        description="Investigate root causes and SELECT the SINGLE most critical factor.",
-    )
-
-
-# =============================================================================
-# Stage 3: Department Mapping
-# =============================================================================
-def create_department_mapper() -> Step:
-    """Create the responsible department mapping stage."""
-    agent = create_agent(
-        name="Department Mapper",
-        slug="bureaucrat", 
-        output_schema=SelectedDepartment,
-        enable_reasoning_tools=False,  # Disabled - Pollinations models misformat
-    )
-    
-    return Step(
-        name="3. Map ONE Department",
-        agent=agent,
-        description="Map government bodies and SELECT the ONE most responsible department.",
-    )
-
-
-# =============================================================================
-# Stage 4: Solution Design
-# =============================================================================
-def create_solution_designer() -> Step:
-    """Create the solution design stage."""
-    agent = create_agent(
-        name="Solution Designer",
-        slug="engineer",
-        output_schema=SelectedSolution,
-        enable_reasoning_tools=False,  # Disabled - Pollinations models misformat
-    )
-    
-    return Step(
-        name="4. Design ONE Solution",
-        agent=agent,
-        description="Evaluate interventions and SELECT the SINGLE most effective solution.",
-    )
-
-
-# =============================================================================
-# Stage 5: Funding Match
-# =============================================================================
-def create_funding_matcher() -> Step:
-    """Create the funding matching stage."""
-    agent = create_agent(
-        name="Funding Matcher",
-        slug="liaison",
-        output_schema=SelectedFunding,
-        enable_reasoning_tools=False,  # Disabled - Pollinations models misformat
-    )
-    
-    return Step(
-        name="5. Match ONE Funding",
-        agent=agent,
-        description="Search funding sources and SELECT the ONE best-matched programme.",
-    )
+    return Step(name=name, agent=agent, description=description)
 
 
 # =============================================================================
@@ -187,36 +120,25 @@ def create_singleton_pipeline() -> Workflow:
     """
     Create the converging singleton pipeline for civic remediation.
     
-    Each stage receives the previous output and MUST select exactly ONE item:
-    1. Problem → Select ONE critical civic problem
-    2. Cause → Identify ONE root cause  
-    3. Department → Map ONE responsible body
-    4. Solution → Design ONE intervention
-    5. Funding → Match ONE funding programme
-    6. Blueprint → Synthesize into project launch
-    
-    Returns:
-        Workflow configured for converging singleton outputs
+    Each stage receives the previous output and MUST select exactly ONE item.
     """
+    # Generate steps from STAGES config
+    steps = [_create_stage_step(*stage) for stage in STAGES]
+    
+    # Add final synthesis step
+    steps.append(Step(
+        name="6. Synthesize Blueprint",
+        executor=synthesize_blueprint,
+        description="Combine all singleton selections into final project blueprint.",
+    ))
+    
     return Workflow(
         name="Civic Remediation Singleton Pipeline",
         description=(
-            "Converging pipeline that narrows down from many options to exactly ONE "
-            "at each stage: ONE problem, ONE cause, ONE department, ONE solution, "
-            "ONE funding programme, leading to a focused project launch."
+            "Converging pipeline: ONE problem → ONE cause → ONE department → "
+            "ONE solution → ONE funding → focused project launch."
         ),
-        steps=[
-            create_problem_selector(),
-            create_cause_identifier(),
-            create_department_mapper(),
-            create_solution_designer(),
-            create_funding_matcher(),
-            Step(
-                name="6. Synthesize Blueprint",
-                executor=synthesize_blueprint,
-                description="Combine all singleton selections into final project blueprint.",
-            ),
-        ],
+        steps=steps,
     )
 
 

@@ -73,8 +73,3 @@ def create_agent(
         timezone_identifier="Etc/UTC",
     )
 
-class BaseAgent:
-    """Base class for all civic agents to handle common setup."""
-    def __init__(self, name: str, slug: str, user_id: str = "civic-system"):
-        self.prompt = get_agent_prompt(slug)
-        self.user_id = user_id

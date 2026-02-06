@@ -1,0 +1,29 @@
+name: "💡 Idea / Discussion"
+description: Share an idea, research link, or civic use case.
+title: "[Idea]: "
+labels: ["discussion"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: Describe your idea in a few sentences.
+      placeholder: "What if we used the system for..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: civic_context
+    attributes:
+      label: Civic context
+      description: City/region, problem space, or policy context.
+      placeholder: "Barakar / Ganga basin / waste management..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links / references
+      description: Articles, datasets, policies, or previous work.
+      placeholder: "https://..."

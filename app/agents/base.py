@@ -73,3 +73,48 @@ def create_agent(
         timezone_identifier="Etc/UTC",
     )
 
+
+class SimpleAgent:
+    """
+    Base class that eliminates boilerplate for civic agent classes.
+    
+    Handles common patterns:
+    - Agent initialization with prompt loading
+    - Message formatting and execution
+    """
+    
+    def __init__(self, name: str, slug: str, output_schema, tools=None, user_id="civic-system"):
+        """
+        Initialize a simple agent.
+        
+        Args:
+            name: Display name of the agent
+            slug: Slug for prompt loading (e.g., "sentinel", "investigator")
+            output_schema: Pydantic model for structured output
+            tools: Optional list of tools for the agent
+            user_id: User ID for memory/session management
+        """
+        self.prompt = get_agent_prompt(slug)
+        self.user_id = user_id
+        self.agent = create_agent(
+            name=name,
+            slug=slug,
+            tools=tools or [],
+            output_schema=output_schema,
+            user_id=user_id
+        )
+    
+    def _run(self, **format_kwargs):
+        """
+        Run the agent with formatted prompt variables.
+        
+        Args:
+            **format_kwargs: Variables to format into the prompt template
+            
+        Returns:
+            The agent's response content (structured output)
+        """
+        messages = self.prompt.format(**format_kwargs)
+        formatted_messages = [{"role": m.role, "content": m.content} for m in messages]
+        response = self.agent.run(formatted_messages)
+        return response.content

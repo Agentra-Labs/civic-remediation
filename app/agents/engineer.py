@@ -1,33 +1,19 @@
-from app.agents.base import create_agent, BaseAgent
+from app.agents.base import SimpleAgent
 from agno.tools.parallel import ParallelTools
-from pydantic import BaseModel, Field
-from typing import List
+from app.models import SelectedSolution
 
-# Removed legacy analyst import
 
-class Vendor(BaseModel):
-    name: str = Field(..., description="Name of the vendor/startup")
-    solution: str = Field(..., description="Description of their technical solution")
-    website: str = Field(..., description="Website URL if available")
-    relevance_score: int = Field(..., description="Relevance to the problem 1-10")
-
-class VendorList(BaseModel):
-    vendors: List[Vendor] = Field(..., description="List of potential vendors")
-
-class EngineerAgent(BaseAgent):
+class EngineerAgent(SimpleAgent):
+    """Designs technical solutions."""
+    
     def __init__(self, user_id: str = "civic-system"):
-        super().__init__("Engineer", "engineer", user_id)
-        
-        self.agent = create_agent(
-            name="Engineer",
-            slug="engineer",
+        super().__init__(
+            "Engineer", 
+            "engineer", 
+            SelectedSolution,
             tools=[ParallelTools(enable_search=True, enable_extract=True)],
-            output_schema=VendorList,
             user_id=user_id
         )
-
-    def find_solutions(self, investigative_findings: str) -> VendorList:
-        messages = self.prompt.format(investigator_json=investigative_findings)
-        formatted_messages = [{"role": m.role, "content": m.content} for m in messages]
-        response = self.agent.run(formatted_messages)
-        return response.content
+    
+    def find_solutions(self, investigator_json: str) -> SelectedSolution:
+        return self._run(investigator_json=investigator_json)

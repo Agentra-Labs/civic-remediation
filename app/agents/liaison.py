@@ -2,95 +2,48 @@ from typing import List, Optional
 from agno.tools.parallel import ParallelTools
 from pydantic import BaseModel, Field
 
-from app.agents.base import create_agent
-from app.utils import get_agent_prompt
+from app.agents.base import SimpleAgent
 
 
 class FundingSource(BaseModel):
-    """A potential funding source for civic remediation."""
-    name: str = Field(..., description="Name of the funding source (organization, grant, philanthropist)")
-    source_type: str = Field(..., description="Type: nonprofit, government_grant, philanthropist, crowdfunding, corporate_csr, foundation")
-    description: str = Field(..., description="Brief description of the funding opportunity")
-    estimated_amount: Optional[str] = Field(None, description="Potential funding amount or range")
-    application_url: Optional[str] = Field(None, description="URL to apply or learn more")
-    eligibility_notes: str = Field(..., description="Key eligibility requirements or notes")
-
-
-class CostEstimate(BaseModel):
-    """Cost breakdown for a civic remediation project."""
-    category: str = Field(..., description="Cost category (e.g., materials, labor, permits, equipment)")
-    description: str = Field(..., description="Description of the cost item")
-    estimated_cost: float = Field(..., description="Estimated cost in USD")
-    notes: Optional[str] = Field(None, description="Additional notes or assumptions")
+    """A specific funding opportunity for civic projects."""
+    source_name: str = Field(..., description="Name of the funding program/grant/foundation")
+    source_type: str = Field(..., description="Type: nonprofit grant, government program, philanthropic foundation, etc.")
+    funding_amount: str = Field(..., description="Amount available (range or specific)")
+    eligibility: str = Field(..., description="Key eligibility requirements")
+    application_url: str = Field(..., description="URL to apply or learn more")
+    deadline: Optional[str] = Field(None, description="Application deadline if available")
 
 
 class FundingPlan(BaseModel):
-    """Complete funding plan for civic remediation."""
-    project_summary: str = Field(..., description="Summary of the remediation project being funded")
-    total_estimated_cost: float = Field(..., description="Total estimated cost for the project in USD")
-    cost_breakdown: List[CostEstimate] = Field(..., description="Detailed breakdown of costs")
-    funding_sources: List[FundingSource] = Field(..., description="Identified funding opportunities")
-    funding_gap: float = Field(..., description="Gap between identified funding and total cost")
-    recommendations: str = Field(..., description="Strategic recommendations for securing funding")
+    """Comprehensive funding plan for a civic remediation project."""
+    project_cost_estimate: str = Field(..., description="Estimated total cost of the project")
+    funding_sources: List[FundingSource] = Field(..., description="List of potential funding sources")
+    funding_strategy: str = Field(..., description="Strategy for securing funding (phased approach, partnerships, etc.)")
     timeline_estimate: str = Field(..., description="Estimated timeline for funding acquisition")
 
 
-
-class LiaisonAgent:
+class LiaisonAgent(SimpleAgent):
     """
     Funding Coordinator Agent - Finds funding opportunities and estimates costs
     for civic remediation projects. Uses Parallel Tools for comprehensive research.
     """
     
     def __init__(self, user_id: str = "civic-system"):
-        self.prompt = get_agent_prompt("liaison")
-        self.user_id = user_id
-        
-        self.agent = create_agent(
-            name="Liaison",
-            slug="liaison",
+        super().__init__(
+            "Liaison",
+            "liaison",
+            FundingPlan,
             tools=[ParallelTools(enable_search=True, enable_extract=True)],
-            output_schema=FundingPlan,
             user_id=user_id
         )
 
     def create_funding_plan(self, project_description: str, location: str = "") -> FundingPlan:
         """
-        Create a comprehensive funding plan for a civic remediation project.
+        Create a funding plan for a civic remediation project.
         
         Args:
-            project_description: Description of the remediation project
+            project_description: Description of the project needing funding
             location: Geographic location for targeted funding search
         """
-        prompt = f"""
-        Create a comprehensive funding plan for this civic remediation project:
-        
-        Project: {project_description}
-        Location: {location or "Not specified"}
-        
-        Please:
-        1. Estimate the total project cost with detailed breakdown
-        2. Search for and identify ALL possible funding sources including:
-           - Non-profit grants
-           - Philanthropic foundations and philanthropists
-           - Government grants (federal, state, local)
-           - Corporate CSR programs
-           - Crowdfunding platforms
-           - Community development financial institutions (CDFIs)
-           - Impact investors
-        3. Calculate any funding gap
-        4. Provide strategic recommendations for securing the funding
-        5. Estimate a realistic timeline for funding acquisition
-        """
-        response = self.agent.run(prompt)
-        return response.content
-
-    # Keep legacy method for backward compatibility
-    def create_proposal(self, strategy) -> FundingPlan:
-        """Legacy method - now creates a funding plan instead of vendor proposal."""
-        project_desc = getattr(strategy, 'selected_strategy', str(strategy))
-        return self.create_funding_plan(project_desc)
-
-
-# Export the new schema for use elsewhere
-__all__ = ['LiaisonAgent', 'FundingPlan', 'FundingSource', 'CostEstimate']
+        return self._run(project_description=project_description, location=location)

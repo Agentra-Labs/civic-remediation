@@ -1,23 +1,18 @@
-from app.agents.base import create_agent
+from app.agents.base import SimpleAgent
 from agno.tools.parallel import ParallelTools
-from app.utils import get_agent_prompt
-
 from app.knowledge import persist_agent_findings
 from app.models import SelectedProblem
 
 
-class SentinelAgent:
+class SentinelAgent(SimpleAgent):
     """Scans for civic problems and selects the most critical one."""
     
     def __init__(self, user_id: str = "civic-system"):
-        self.prompt = get_agent_prompt("sentinel")
-        self.user_id = user_id
-        
-        self.agent = create_agent(
-            name="Sentinel",
-            slug="sentinel",
+        super().__init__(
+            "Sentinel",
+            "sentinel",
+            SelectedProblem,
             tools=[ParallelTools(enable_search=True)],
-            output_schema=SelectedProblem,
             user_id=user_id
         )
 
@@ -29,11 +24,7 @@ class SentinelAgent:
             query: The region or topic to scan (e.g., "Bihar infrastructure")
             persist_to_kb: If True, automatically save findings to KB for other agents
         """
-        messages = self.prompt.format(query=query)
-        formatted_messages = [{"role": m.role, "content": m.content} for m in messages]
-        
-        response = self.agent.run(formatted_messages)
-        result = response.content
+        result = self._run(query=query)
         
         # Auto-persist to KB so other agents can reference these findings
         if persist_to_kb and result:
@@ -43,4 +34,3 @@ class SentinelAgent:
                 print(f"[KB] Warning: Failed to persist findings: {e}")
         
         return result
-

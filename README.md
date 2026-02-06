@@ -1,124 +1,75 @@
-# Civic Remediation System 🏙️✨
+# Civic Remediation System 🏙️
 
-**Surgical Civic Intervention. Powered by Autonomous Agents.**
-
----
-
-## ⚡ The Manifesto
-
-The world doesn't need another chatbot. It needs **solutions**.
-
-We see the potholes, the overflowing waste, the crumbling infrastructure. We see the paperwork piling up while our cities decay. The old way—bureaucratic, slow, opaque—is broken.
-
-**We are building the alternative.**
-
-This is a **digital task force** designed for one purpose: to identify, analyze, and **solve** systemic civic failures. It doesn't just talk; it hunts for root causes, engineers solutions, and finds the funding to make them real.
-
-> *"What if an AI could scan the world for problems, figure out how to fix them, and then actually make it happen?"*
-
-We are making that "What if" a reality.
+**AI agents that find civic problems, trace root causes, and secure funding to fix them.**
 
 ---
 
-## 🧬 This Is Not RAG. This Is a Converging Singularity.
+## Architecture
 
-Most agent systems diverge—they generate endless lists of "ideas" and "options" that go nowhere.
+**Converging Singleton Pipeline** — Each stage selects ONE output to force focus:
 
-**We built a Converging Singleton Pipeline.**
-
-It doesn't give you 10 options. It gives you **THE ONE**.
-
-1.  **Selects ONE Critical Problem.**
-2.  **Identifies ONE Root Cause.**
-3.  **Target ONE Responsible Department.**
-4.  **Engineers ONE Technical Solution.**
-5.  **Secures ONE Funding Source.**
-
-Focus is power. By narrowing the aperture, we force the system to reason, critique, and select only the highest-probability path to impact.
+1. **ONE Problem** → Highest impact civic issue
+2. **ONE Root Cause** → The systemic failure point
+3. **ONE Department** → Responsible government body
+4. **ONE Solution** → Scalable technical intervention
+5. **ONE Funding Source** → Matched grant or scheme
 
 ---
 
-## 🤖 The Elite Task Force
+## Agents
 
-Your team of autonomous specialists. No generalists allowed.
-
-### 🔭 Sentinel (The Scout)
-**Mission:** Filter signal from noise.
-Scans the planetary data stream (News, Socials, Reports) to detect high-impact systemic failures. It ignores the trivial to focus on the critical.
-
-### 🔎 Investigator (The Detective)
-**Mission:** Uncover the hidden truth.
-Symptoms are distractions. The Investigator digs deep to find the *actual* technical or structural failure point.
-
-### 🏛️ Bureaucrat (The Mapper)
-**Mission:** Navigate the labyrinth.
-Identifies the exact specific government body with the jurisdiction, mandate, and budget to act.
-
-### 🛠️ Engineer (The Solver)
-**Mission:** Architect the fix.
-Matches the root cause to a scalable, modular, and proven technical intervention (e.g., decentralized STPs, LoRaWAN sensor arrays).
-
-### 🤝 Liaison (The Closer)
-**Mission:** Secure the capital.
-Scans global grants, CSR funds, and government schemes to find the money that fits the mission.
+| Agent | Role |
+|-------|------|
+| 🔭 **Sentinel** | Scans news/socials for high-impact civic failures |
+| 🔎 **Investigator** | Identifies technical root cause |
+| 🏛️ **Bureaucrat** | Maps responsible government body |
+| 🛠️ **Engineer** | Designs modular technical solution |
+| 🤝 **Liaison** | Finds matching funding sources |
 
 ---
 
-## 🛠️ Built for Builders: The AgentraLabs Way
+## Stack
 
-We are pushing the boundaries of what open-source agent development looks like. This repository isn't just code; it's a glimpse into the future of **Agentic DevOps**.
-
-### Empowered by the [AgentraLabs](https://x.com/AgentraLabs) Toolchain
-
-We use the most advanced MCP (Model Context Protocol) servers to give our agents—and our developers—superpowers:
-
-*   **🧠 Nia MCP**: The "Brain" of the repo. We use Nia to gain deep semantic understanding of our own codebase, automatically refactor legacy patterns, and ensure architectural purity. Use Nia to explore this repo like a pro.
-*   **💾 Polydev MCP**: The "Memory". Polydev provides persistent, cross-session context and memory, allowing us to build agents that learn and adapt over time rather than resetting every run.
-
-**This is how the future is built.**
+- **Framework**: [Agno](https://agno.com)
+- **Model**: Perplexity / Mistral
+- **Memory**: PostgreSQL + pgvector
+- **Tracing**: LangWatch
 
 ---
 
-## 🚀 Run the System
+## Quickstart
 
-### Prerequisites
-*   **Python** (via `uv`)
-*   **Docker** (for the brain)
-*   **Agno** (The framework)
-
-### 1. Ignite
 ```bash
-# Install the next-gen package manager
+# Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Sync the matrix
+# Install deps
 uv sync
 
-# Wake the brain
+# Start database
 docker compose up -d
-```
 
-### 2. Execute (Singleton Mode)
-Run the converging pipeline to generate a focused project blueprint:
-```bash
+# Run pipeline
 uv run python -m app.main "Pollution of the Ganga River"
-```
 
-### 3. AgentOS (The Command Center)
-Visualize the hive mind:
-```bash
+# Or use AgentOS UI
 uv run -m app.agent_os
+# Then visit os.agno.com
 ```
-Visit **[os.agno.com](https://os.agno.com)**.
 
 ---
 
-## 🏴 Join the Resistance
+## Developer Setup
 
-We are building the Operating System for Society. This is open source because the future belongs to everyone.
+This repo uses MCP servers for enhanced DX:
 
-**Are you a developer, designer, or solver?**
+- **Nia MCP** — Semantic codebase search & refactoring
+- **Polydev MCP** — Persistent cross-session context
 
-[**Join the Discord Community**](https://discord.gg/g95mrWGm4G)
+---
 
-*Built with ❤️ by the AgentraLabs Community directly from the future.*
+## Contributing
+
+[**Join Discord**](https://discord.gg/g95mrWGm4G) · [**@AgentraLabs**](https://x.com/AgentraLabs)
+
+MIT License

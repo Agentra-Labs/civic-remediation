@@ -1,0 +1,61 @@
+name: "🐛 Bug report"
+description: Report a problem with the civic-remediation system.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill this out so we can reproduce and fix the issue quickly.
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python/uv version, how you ran the app.
+      placeholder: "Ubuntu 22.04, uv 0.x, Docker 24.x"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Step-by-step commands and inputs.
+      placeholder: |
+        1. uv sync
+        2. docker compose up -d
+        3. uv run python -m app.main "Pollution of the Ganga River"
+        4. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / logs
+      description: What actually happened? Include logs or errors.
+      render: shell
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where does it fail in the pipeline?
+      options:
+        - Sentinel (Problem selection)
+        - Investigator (Root-cause analysis)
+        - Bureaucrat (Department mapping)
+        - Engineer (Solution design)
+        - Liaison (Funding search)
+        - AgentOS / UI
+        - Not sure
